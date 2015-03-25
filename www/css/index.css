@@ -1,0 +1,195 @@
+/* CSS Reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*	Custom Styles	*/
+body{
+	font-family: Calibri;
+}
+html, body, .page, #menu, .content{
+	height: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+.width100{
+	width: 100%;
+}
+.boxsizingInherit{
+	box-sizing: inherit;
+	-moz-box-sizing: inherit;
+}
+.page > header{
+	height: 50px;
+}
+header{
+	padding: 10px 20px;
+	position: relative;
+}
+.content{
+	padding-top: 50px;
+	margin-top: -50px;
+	overflow-y: auto;
+}
+.padding-10{
+	padding: 10px;
+}
+.bottomMargin-5{
+	margin-bottom: 5px;
+}
+.bottomMargin-10{
+	margin-bottom: 10px;
+}
+.transitionTransform{
+	-webkit-transition: -webkit-transform 500ms ease-in;
+	-moz-transition: -moz-transform 500ms ease-in;
+	-ms-transition: -ms-transform 500ms ease-in;
+}
+.scale0{
+	-webkit-transform: scale(0);
+	-moz-transform: scale(0);
+	-ms-transform: scale(0);
+}
+.overlay-bg{
+	background: rgba(0,0,0,0.5)
+}
+.bg-orange{
+	background: orange;
+}
+.bg-white{
+	background: white;
+}
+.bg-lightgray{
+	background: #D3D3D3;
+}
+.inlineBlock{
+	display: inline-block;
+	font-size: 16px;
+}
+.verticalMiddle{
+	vertical-align: middle;
+}
+.textCenter{
+	text-align: center;
+}
+.floatRight{
+	float: right;
+}
+.stackTop{
+	position: relative;
+	z-index: 1;
+}
+.menuIcon:before, .menuIcon:after  {
+	content: '';
+	display: block;
+	width: 100%;
+	height: 5px;
+	border-bottom: 3px solid #FFF;
+}
+.menuIcon:before {
+	border-top: 3px solid #FFF;
+}
+.inlineBlockWrapper{
+	font-size: 0;
+}
+.inlineBlockWrapper:after{
+	content: '';
+	display: inline-block;
+	vertical-align: middle;
+	width: 0;
+	height: 100%;
+}
+.color-white{
+	color: #fff;
+} 
+.font24{
+	font-size: 24px;
+}
+.font28{
+	font-size: 28px;
+}
+.font32{
+	font-size: 32px;
+}
+.headerIcon{
+	width: 30px;
+}
+.hide{
+	opacity: 0;
+}
+.absolutePositioned{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.popupWrapper{
+	padding: 50px;
+	z-index: 2;
+}
+.listitem{
+	padding: 10px 20px;
+}
+.listitem:nth-child(odd) {
+	background: #F0F8FF;
+}
+.translateX-100{
+	-webkit-transform: translateX(-100%);
+	-moz-transform: translateX(-100%);
+	-ms-transform: translateX(-100%);
+}
+#menulist{
+	background: #fff;
+}
+#menuwrapper{
+	width: 75%;
+	max-width: 300px;
+}
+#menu{
+	z-index: 1;
+}
+.screenTitle{
+	margin: 0 -30px;
+	padding: 0 30px;
+	width: 100%;
+	text-align: center;
+}

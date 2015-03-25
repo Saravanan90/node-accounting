@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<title>Accounting</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="css/index.css" />
+		<script src="js/jquery.js"></script>
+		<script src="js/underscore.js"></script>
+		<script src="js/backbone.js"></script>
+	</head>
+	<body>
+		<% include addClient%>
+		<div class="page" id="clientHome">
+			<header class="bg-orange inlineBlockWrapper boxsizingInherit color-white">
+				<div class="menuIcon headerIcon inlineBlock verticalMiddle stackTop"></div>
+				<h3 class="screenTitle inlineBlock verticalMiddle boxsizingInherit font28">Clients Summary</h3>
+				<div id="addIcon" class="headerIcon inlineBlock verticalMiddle font32 textCenter">+</div>
+			</header>
+			<div class="content">
+				<ul id="clientlist">
+					<% include client%>
+				</ul>
+			</div>
+		</div>
+		<% include menu%>
+		<script src="js/index.js"></script>
+	</body>
+</html> 
