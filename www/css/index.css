@@ -46,11 +46,16 @@ table {
 /*	Custom Styles	*/
 body{
 	font-family: Calibri;
+	overflow: hidden;
 }
 html, body, .page, #menu, .content{
 	height: 100%;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
+}
+.page{
+	position: absolute;
+	width: 100%;
 }
 .width100{
 	width: 100%;
@@ -171,6 +176,11 @@ header{
 }
 .listitem:nth-child(odd) {
 	background: #F0F8FF;
+}
+.translateX100{
+	-webkit-transform: translateX(100%);
+	-moz-transform: translateX(100%);
+	-ms-transform: translateX(100%);
 }
 .translateX-100{
 	-webkit-transform: translateX(-100%);

@@ -2,17 +2,21 @@ exports.configure = function(params) {
 	model = params.model
 }
 exports.index = function(req, res) {
+	res.render('index');
+}
+exports.getLaunchData = function(req, res) {
+	var tmpl = this;
 	model.getClients( function(err, clientList){
 		if(!err){
-			res.render('index', {
-				title: 'Accounting',
-				clients: clientList
-			});
+			var data = {
+				clients: clientList,
+				templates: tmpl
+			}
+			res.send(data);
 		}
 	});
 }
 exports.addClient = function(req, res) {
-	console.log('Add Request Received..' + req.body.info);
 	var newClient = {
 		name: req.body.name,
 		eMail: req.body.eMail,
@@ -22,17 +26,7 @@ exports.addClient = function(req, res) {
 		if(err){
 			res.status(200).send(err);
 		}else{
-			res.render('client', {
-				clients: [data]
-			});
+			res.status(200).send(data);
 		}
 	});
-	/*model.getClients( function(err, clientList){
-		if(!err){
-			res.render('index', {
-				title: 'Accounting',
-				clients: clientList
-			});
-		}
-	});*/
 }

@@ -9,20 +9,18 @@
 	</head>
 	<body>
 		<% include addClient%>
-		<% include addProject%>
-		<% include addEvent%>
-		<div class="page transitionTransform" id="clientSummary">
+		<div class="page" id="clientHome">
 			<header class="bg-orange inlineBlockWrapper boxsizingInherit color-white">
 				<div class="menuIcon headerIcon inlineBlock verticalMiddle stackTop"></div>
-				<h3 class="screenTitle inlineBlock verticalMiddle boxsizingInherit font28">Clients Overview</h3>
+				<h3 class="screenTitle inlineBlock verticalMiddle boxsizingInherit font28">Clients Summary</h3>
 				<div id="addIcon" class="headerIcon inlineBlock verticalMiddle font32 textCenter">+</div>
 			</header>
 			<div class="content">
-				<ul id="clientlist"></ul>
+				<ul id="clientlist">
+					<% include client%>
+				</ul>
 			</div>
 		</div>
-		<% include clientDetail%>
-		<% include projectDetail%>
 		<% include menu%>
 		<script src="js/index.js"></script>
 	</body>

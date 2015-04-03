@@ -1,5 +1,68 @@
 ( function() {
+	appTemplates = [];
+	var clientSummaryModel = Backbone.Model.extend({
+		//	used to define any client side validations for the models saved in clientCollection.
+		defaults: {
+			name: '',
+			eMail: '',
+			info: ''
+		}
+	});
+	var projSummaryModel = Backbone.Model.extend({
+		//	used to define any client side validations for the models saved in projCollection.
+		defaults: {
+			name: '',
+			cost: ''
+		}
+	});
+	var eventSummaryModel = Backbone.Model.extend({
+		//	used to define any client side validations for the models saved in eventCollection.
+		defaults: {
+			desc: '',
+			time: ''
+		}
+	});
+	var projCollection = Backbone.Collection.extend({
+		model: projSummaryModel
+	});
+	var eventCollection = Backbone.Collection.extend({
+		model: eventSummaryModel
+	});
+	var clientCollection = Backbone.Collection.extend({
+		url: '/client',
+		model: clientSummaryModel
+	});
+	var clientDetailModel = clientSummaryModel.extend({
+		url: '/clientDetails',
+		defaults: {
+			projList: new projCollection(),
+		}
+	});
+	_.extend( clientDetailModel.prototype.defaults, clientSummaryModel.prototype.defaults );
+	
+	var projDetailModel = projSummaryModel.extend({
+		url: '/projDetails',
+		defaults: {
+			eventList: new eventCollection(),
+		}
+	});
+	_.extend( projDetailModel.prototype.defaults, projSummaryModel.prototype.defaults );
+	
 	var clientView = Backbone.View.extend({
+		initialize: function(data) {
+			this.template = _.template( appTemplates['client'] );
+			this.target = this.$el.find('#clientlist');
+			this.render();
+			this.collection.bind('add', this.updateView, this );
+		},
+		updateView: function(newClient, response) {
+			if(newClient.attributes.code !== 11000){
+				this.target.append( this.template( {clients: [newClient.attributes]} ) );
+			}
+		},
+		render: function() {
+			this.target.html(this.template( {clients: this.collection.toJSON()} ));
+		},
 		events: {
 			'click .menuIcon': 'openMenu',
 			'click #addIcon': 'addClient',
@@ -16,33 +79,30 @@
 			var addClientPopup = $('#addClientPopup');
 			addClientPopup.removeClass('scale0');
 		},
-		editClient: function() {
-			alert('Edit Client Data...');
+		editClient: function(event) {
+			 
 		}
 	});
 	
 	var addClientView = Backbone.View.extend({
+		initialize: function(data) {
+			this.collection.bind('add', this.clientAdditionCallBack, this );
+		},
 		events: {
-			'submit form': 'submitForm',
+			'submit form': 'submitModelData',
 			'click #closeIcon': 'closePopup'
 		},
-		submitForm: function(event) {
+		submitModelData: function(event) {
 			event.preventDefault();
-			var params = {
-				data: $(event.currentTarget).serialize(),
-				url: '/addClient'
-			}
-			console.log( params.data );
-			makeAjaxCall( params, this.clientAdditionCallBack.bind(this) );
+			var	newClientData = getJSON( $(event.currentTarget).serializeArray() );
+			this.collection.create(newClientData,{wait: true});
 		},
-		clientAdditionCallBack: function( data ) {
-			if(data.code === 11000){
+		clientAdditionCallBack: function( data, response ) {
+			if(data.attributes.code === 11000){
 				alert('Duplicate Client...');
 				this.clearFields();
 			}else{
 				alert('Client Added Successfully...');
-				var clientList = $('#clientlist');
-				clientList.prepend(data);
 				this.closePopup();
 			}
 		},
@@ -51,6 +111,7 @@
 		},
 		closePopup: function() {
 			this.$el.addClass('scale0');
+			this.clearFields();
 		}
 	});
 	
@@ -63,23 +124,30 @@
 		},
 	});
 	
-	var clientViewObj = new clientView({
-		el: '#clientHome'
-	});
-	var addClientViewObj = new addClientView({
-		el: '#addClientPopup'
-	});
 	var appViewObj = new appView({
 		el: 'body'
 	});
-} )();
-
-var makeAjaxCall = function(params, callback){
+	
+	function getJSON( formDataArray ) {
+		var formJSON = {};
+		for( var inx = 0, length = formDataArray.length; inx < length; inx++ ){
+			var obj = formDataArray[inx];
+			formJSON[obj.name] = obj.value;
+		}
+		return formJSON;
+	}
 	$.ajax({
-		type: 'POST',
-		data: params.data, 	
-		url: params.url,
+		url: '/getLaunchData',
 	}).done( function(data) {
-		callback( data );
+		appTemplates = data.templates;
+		var clientList = new clientCollection( data.clients );
+		var addClientViewObj = new addClientView({
+			el: '#addClientPopup',
+			collection: clientList
+		});
+		var clientViewObj = new clientView({
+			el: '#clientSummary',
+			collection: clientList
+		});
 	});
-}
+} )();

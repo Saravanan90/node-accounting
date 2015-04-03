@@ -1,0 +1,7 @@
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
