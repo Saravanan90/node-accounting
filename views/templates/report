@@ -1,0 +1,17 @@
+<%_.forEach( clients, function(client) {%>
+	<ul>
+		<li class="font24 textCenter bg-peachpuff listheader"><%=client%></li>
+		<%if( projects[client] ) {var projectList = projects[client];%>
+			<%_.forEach( projectList, function(proj) {%>
+				<li class="listitem">
+					<p class="font18 bottomMargin-5">Project: <%=proj.name%></p>
+					<p class="bottomMargin-5">Time Spent: <%=proj.totalTime%></p>
+					<p>Earnings: <%=proj.totalCost%></p>
+				</li>
+			<%})%>
+			<li class="listitem bg-coral font-bold"><p>Total Earnings: <%=projectList.totalEarning%></p></li>
+		<%}else{%>
+			<li class="errorMsg listitem">Projects Not available</li>
+		<%}%>
+	</ul>
+<%})%>

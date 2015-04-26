@@ -1,0 +1,6 @@
+<%_.forEach( topClients, function(client) {%>
+	<li class="font24 listitem">
+		<span><%=client[0].client%></span>
+		<span class="floatRight"><%=client.totalEarning%></span>
+	</li>
+<%})%>

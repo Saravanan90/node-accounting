@@ -1,6 +1,6 @@
-<%_.forEach( clients, function(client) {%>
+<%_.forEach( clients, function(client, index) {%>
 	<li class="listitem">
-		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<button class="floatRight js-editClient" data-index=<%=index+lastIndex%>>Edit</button>
 		<p class="font24 bottomMargin-5"><%=client.name%></p>
 		<p class="bottomMargin-5"><%=client.eMail%></p>
 		<p><%=client.info%></p>

@@ -1,7 +1,18 @@
-<%_.forEach( projects, function(proj) {%>
+<%if(!_.isEmpty(clientData)){%>
+<ul>
+	<li><%=clientData.name%></li>
+	<li><%=clientData.eMail%></li>
+	<li><%=clientData.info%></li>
+</ul>
+<ul id="projlist">
+<%}%>
+<%_.forEach( projList, function(proj, index) {%>
 	<li class="listitem">
-		<button class="floatRight js-editClient">Edit</button>
+		<button class="floatRight js-editClient" data-index=<%=index+lastIndex%>>Edit</button>
 		<p class="font24 bottomMargin-5"><%=proj.name%></p>
 		<p><%=proj.cost%></p>
 	</li>
 <%})%>
+<%if(!_.isEmpty(clientData)){%>
+</ul>
+<%}%>

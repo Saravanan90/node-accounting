@@ -1,7 +1,16 @@
-<%_.forEach( events, function(event) {%>
+<%if(!_.isEmpty(projData)){%>
+<ul>
+	<li><%=projData.name%></li>
+	<li><%=projData.cost%></li>
+</ul>
+<ul id="eventlist">
+<%}%>
+<%_.forEach( eventList, function(event) {%>
 	<li class="listitem">
-		<button class="floatRight js-editClient">Edit</button>
-		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p class="font24 bottomMargin-5"><%=event.name%></p>
 		<p><%=event.time%></p>
 	</li>
 <%})%>
+<%if(!_.isEmpty(projData)){%>
+</ul>
+<%}%>

@@ -58,9 +58,40 @@ exports.getClients = function(callback) {
 		callback(err, clients);
 	});
 };
-exports.getProjects = function() {
-
+exports.getProjects = function( clientName, callback) {
+	var queryObj = clientName !== '' ? { client: clientName } : {};
+	Project.find( queryObj, function(err, projects) {
+		callback(err, projects);
+	});
 };
-exports.getActivities = function() {
-
+exports.getActivities = function(projName, callback) {
+	var queryObj = projName !== '' ? { project: projName } : {};
+	Activity.find( queryObj, function(err, activities) {
+		callback(err, activities);
+	});
+};
+exports.getReportData = function(callback) {
+	var report = {}, that = this;
+	that.getClients(function(err, clients){
+		if(!err){
+			report.clientList = clients;
+			that.getProjects('',function(err, projects){
+				if(!err){
+					report.projList = projects;
+					that.getActivities('',function(err, events){
+						if(!err){
+							report.eventList = events;
+							callback('', report);
+						}else{
+							callback(err);
+						}
+					});
+				}else{
+					callback(err);
+				}
+			});
+		}else{
+			callback(err);
+		}
+	});
 };

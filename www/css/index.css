@@ -75,6 +75,7 @@ header{
 	padding-top: 50px;
 	margin-top: -50px;
 	overflow-y: auto;
+	background: #fff;
 }
 .padding-10{
 	padding: 10px;
@@ -107,6 +108,12 @@ header{
 .bg-lightgray{
 	background: #D3D3D3;
 }
+.bg-coral{
+	background: #FF7F50 !important;
+}
+.bg-peachpuff{
+	background: #FFDAB9;
+}
 .inlineBlock{
 	display: inline-block;
 	font-size: 16px;
@@ -116,6 +123,9 @@ header{
 }
 .textCenter{
 	text-align: center;
+}
+.textRight{
+	text-align: right;
 }
 .floatRight{
 	float: right;
@@ -147,6 +157,9 @@ header{
 .color-white{
 	color: #fff;
 } 
+.font18{
+	font-size: 18px;
+}
 .font24{
 	font-size: 24px;
 }
@@ -155,6 +168,9 @@ header{
 }
 .font32{
 	font-size: 32px;
+}
+.font-bold{
+	font-weight: bold;
 }
 .headerIcon{
 	width: 30px;
@@ -171,11 +187,17 @@ header{
 	padding: 50px;
 	z-index: 2;
 }
+.listheader{
+	padding: 5px;
+}
 .listitem{
 	padding: 10px 20px;
 }
 .listitem:nth-child(odd) {
 	background: #F0F8FF;
+}
+.listitem:nth-child(even) {
+  background: #FFF;
 }
 .translateX100{
 	-webkit-transform: translateX(100%);
@@ -202,4 +224,8 @@ header{
 	padding: 0 30px;
 	width: 100%;
 	text-align: center;
+}
+.errorMsg{
+	background: #FAFAD2 !important;
+	color: #F00;
 }
