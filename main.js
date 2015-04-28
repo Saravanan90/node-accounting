@@ -24,24 +24,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'www')));
 //app.use(express.static(path.join(__dirname, 'views/html')));
 
-//	PreCompile Templates
-var templateFiles = fs.readdirSync( path.join(__dirname, 'views/templates'));
-var result = "";
-_.each( templateFiles, function(file) {
-	var templateString = fs.readFileSync( path.join(__dirname, 'views/templates/') + file, { encoding: 'utf8'}).toString();
-	var varName = file + 'TmplObj';
-	result += "var "+ varName +"=";
-	result += "Backbone.View.extend({\ntemplate: "+_.template(templateString).source+"});\n";
-}); 
-
-var scriptFile = fs.readFileSync( path.join(__dirname, 'www/js/index.js'));
-
-var newScript = result + scriptFile;
-
-fs.writeFileSync( path.join(__dirname, 'www/js/newIndex.js'), newScript);  
-
 //	Request Handlers
-app.get('/', routes.index);
+app.get('/Accounting', routes.index);
 app.post('/client', routes.addClient);
 app.get('/project', routes.getProjects);
 app.post('/project', routes.addProject);
