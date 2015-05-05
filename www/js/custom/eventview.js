@@ -4,10 +4,15 @@ var eventview = (function() {
 			initialize: function() {
 				this.template = this.template.event;
 				this.target = this.$el.find('#projDetail');
+				this.model = datamodel.getProjDetailModel();
 				this.eventCollection = this.model.get('eventList');
 				this.eventCollection.bind('reset', this.render, this);
 				this.eventCollection.bind('add', this.updateEventList, this);
 				this.model.bind('change:name', this.fetchEventList, this);
+				
+				this.addEventViewObj = new addEventView({
+					model: this.model
+				});
 			},
 			render: function() {
 				this.target.html(this.template( {projData: this.model.toJSON(), eventList: this.eventCollection.toJSON() } ));
@@ -24,7 +29,7 @@ var eventview = (function() {
 			},
 			addEvent: function() {
 				var addProjPopup = $('#addEventPopup');
-				addProjPopup.removeClass('scale0').addClass('activePopup');
+				addProjPopup.removeClass('scale0');
 			},
 			fetchEventList: function() {
 				var model = this.model;
@@ -69,7 +74,7 @@ var eventview = (function() {
 				this.$el.find('input[type="text"]').val('');
 			},
 			closePopup: function() {
-				this.$el.addClass('scale0').removeClass('activePopup');
+				this.$el.addClass('scale0');
 				this.clearFields();
 			}
 		});

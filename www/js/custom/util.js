@@ -36,7 +36,11 @@ var util = (function() {
 	
 	function transitPage( inPage, opts ) {
 		var outPage = $('.activePage');
-		if(opts){
+		if( inPage.attr('id') === outPage.attr('id') )
+			return;
+		if( ! outPage[0] ){
+			inPage.removeClass('translateX100').addClass('activePage');
+		}else if(opts){
 			outPage.addClass('animateTransform translateX100');
 			inPage.addClass('animateTransform').removeClass('translateX-100');
 		}else{

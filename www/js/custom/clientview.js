@@ -4,6 +4,10 @@ var clientview = ( function(){
 			initialize: function(data) {
 				this.template = this.template.client;
 				this.target = this.$el.find('#clientlist');
+				this.collection = datamodel.getClientCollection();
+				this.addClientViewObj = new addClientView({
+					collection: this.collection
+				});
 				this.collection.bind('reset', this.render, this );
 				this.collection.bind('add', this.updateView, this );
 			},
@@ -14,7 +18,7 @@ var clientview = ( function(){
 			},
 			render: function() {
 				this.target.html(this.template( {clients: this.collection.toJSON(), lastIndex: 0 } ));
-				router.setWindowHash( 'page/' + this.el.id);
+				this.$el.addClass('activePage');
 			},
 			events: {
 				'click #addIcon': 'addClient',
@@ -22,13 +26,15 @@ var clientview = ( function(){
 			},
 			addClient: function() {
 				var addClientPopup = $('#addClientPopup');
-				addClientPopup.removeClass('scale0').addClass('activePopup');
+				addClientPopup.removeClass('scale0');
 			},
 			editClient: function(event) {
+				router.appendUrlWithoutTriggerUpdate( this.el.id );
 				var clientIndex = event.currentTarget.getAttribute('data-index'),
-					targetClient = this.collection.at( clientIndex );
+					targetClient = this.collection.at( clientIndex ),
+					url = targetClient.get('name') + '/projects';
 				
-				this.model.set( targetClient.toJSON() );
+				router.navigateTo( url );
 			}
 		}),
 		addClientView = Backbone.View.extend({
@@ -58,7 +64,7 @@ var clientview = ( function(){
 				this.$el.find('input[type="text"]').val('');
 			},
 			closePopup: function() {
-				this.$el.addClass('scale0').removeClass('activePopup');
+				this.$el.addClass('scale0');
 				this.clearFields();
 			}
 		});

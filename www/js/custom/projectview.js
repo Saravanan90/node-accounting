@@ -4,11 +4,15 @@ var projectview = (function() {
 			initialize: function(options) {
 				this.template = this.template.project;
 				this.target = this.$el.find('#clientDetail');
+				this.model = datamodel.getClientDetailModel();
 				this.projCollection = this.model.get('projList');
-				this.projModel = options.projModel;
 				this.projCollection.bind('reset', this.render, this);
 				this.projCollection.bind('add', this.updateProjList, this);
 				this.model.bind('change:name', this.fetchProjList, this);
+				
+				this.addProjViewObj = new addProjView({
+					model: this.model
+				});
 			},
 			render: function() {
 				this.target.html(this.template( {clientData: this.model.toJSON(), projList: this.projCollection.toJSON(), lastIndex: 0 } ));
@@ -26,18 +30,20 @@ var projectview = (function() {
 			},
 			addProject: function() {
 				var addProjPopup = $('#addProjectPopup');
-				addProjPopup.removeClass('scale0').addClass('activePopup');
+				addProjPopup.removeClass('scale0');
 			},
 			editProject: function(event) {
+				router.appendUrlWithoutTriggerUpdate( this.el.id );
 				var projIndex = event.currentTarget.getAttribute('data-index'),
-					targetProj = this.projCollection.at( projIndex );
+					targetProj = this.projCollection.at( projIndex ),
+					url = targetProj.get('name') + '/events';
 				
-				this.projModel.set( targetProj.toJSON() );
+				router.navigateTo( url );
 			},
 			fetchProjList: function() {
 				var model = this.model;
 				model.get('projList').fetch({
-					data:{
+					data:{ 
 						clientName: model.get('name')
 					},
 					reset: true,
@@ -77,7 +83,7 @@ var projectview = (function() {
 				this.$el.find('input[type="text"]').val('');
 			},
 			closePopup: function() {
-				this.$el.addClass('scale0').removeClass('activePopup');
+				this.$el.addClass('scale0');
 				this.clearFields();
 			}
 		});

@@ -2,10 +2,10 @@
 	<head>
 		<title>Accounting</title>
 		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="css/index.css" />
-		<!-- <script src="js/library/jquery.js"></script>
-		<script src="js/library/underscore.js"></script>
-		<script src="js/library/backbone.js"></script> -->
+		<link rel="stylesheet" href="/css/index.css" />
+		<script src="/js/library/a_jquery.js"></script>
+		<script src="/js/library/a_underscore.js"></script>
+		<script src="/js/library/backbone.js"></script>
 	</head>
 	<body>
 		<% include addClient%>
@@ -13,7 +13,7 @@
 		<% include addProject%>
 		<% include showTopClients%>
 				
-		<div class="page activePage" id="clientSummary">
+		<div class="page" id="clientSummary">
 			<header class="bg-orange inlineBlockWrapper boxsizingInherit color-white">
 				<div class="menuIcon headerIcon inlineBlock verticalMiddle stackTop"></div>
 				<h3 class="screenTitle inlineBlock verticalMiddle boxsizingInherit font28">Clients Overview</h3>
@@ -29,18 +29,18 @@
 		<% include report%>
 		<% include menu%>
 		
-		<!-- <script src="js/custom/templates.js"></script>
-		<script src="js/custom/index.js"></script>
-		<script src="js/custom/clientview.js"></script>
-		<script src="js/custom/datamodel.js"></script>
-		<script src="js/custom/eventview.js"></script>
-		<script src="js/custom/projectview.js"></script>
-		<script src="js/custom/report.js"></script>
-		<script src="js/custom/router.js"></script>
-		<script src="js/custom/util.js"></script> -->
-		<script src="js/min/accounting.min.js"></script>
+		<script src="/js/custom/templates.js"></script>
+		<script src="/js/custom/index.js"></script>
+		<script src="/js/custom/clientview.js"></script>
+		<script src="/js/custom/datamodel.js"></script>
+		<script src="/js/custom/eventview.js"></script>
+		<script src="/js/custom/projectview.js"></script>
+		<script src="/js/custom/report.js"></script>
+		<script src="/js/custom/router.js"></script>
+		<script src="/js/custom/util.js"></script>
+		<!-- <script src="/js/min/accounting.min.js"></script> -->
 		<script type="text/javascript">
-			app.start( <%-JSON.stringify(clients)%>  );
+			app.start( <%-JSON.stringify(data)%>  );
 		</script>
 	</body>
 </html> 

@@ -4,8 +4,13 @@ var report = (function() {
 			initialize: function(options) {
 				this.template = this.template.report;
 				this.target = this.$el.find('#reportData');
-				this.topClientsList = options.topClientsList;
+				this.topClientsList = _.extend( {}, Backbone.Events );
+				this.model = datamodel.getClientReportModel();
 				this.model.bind('dataUpdated', this.generateReportData, this);
+				
+				this.topClientsViewObj = new topClientsView({
+					topClients: this.topClientsList
+				});
 			},
 			events:{
 				'click #topFiveBtn': 'getTopFiveClients'
@@ -60,10 +65,10 @@ var report = (function() {
 				this.showEle();
 			},
 			showEle: function() {
-				this.$el.removeClass('scale0').addClass('activePopup');
+				this.$el.removeClass('scale0');
 			},
 			hideEle: function() {
-				this.$el.addClass('scale0').removeClass('activePopup');
+				this.$el.addClass('scale0');
 			}
 		});
 	return{

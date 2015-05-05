@@ -25,13 +25,17 @@ app.use(express.static(path.join(__dirname, 'www')));
 //app.use(express.static(path.join(__dirname, 'views/html')));
 
 //	Request Handlers
-app.get('/Accounting', routes.index);
+app.get('/Accounting(/clients)?', routes.index);
+app.get('/Accounting/:clientName/projects', routes.indexGetClientDetails);
+app.get('/Accounting/:projName/events', routes.indexGetProjDetails);
+app.get('/Accounting/report', routes.indexGetReportDetails);
 app.post('/client', routes.addClient);
-app.get('/project', routes.getProjects);
+app.get('/project', routes.getProjectsByClient);
 app.post('/project', routes.addProject);
 app.get('/event', routes.getEvents);
 app.post('/event', routes.addEvent);
 app.get('/report', routes.getReportData);
+app.get('*', routes.redirect);
 
 //	Server Setup
 app.listen(app.get('port'), function() {console.log('Server Started & Listening @ ' + app.get('port'))});	

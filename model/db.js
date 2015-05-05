@@ -53,12 +53,22 @@ exports.addActivity = function(activity, callback) {
 		callback(err);
 	});
 };
+exports.getClient = function( clientName, callback) {
+	Client.find( { name: clientName }, function(err, client) {
+		callback(err, client);
+	});
+};
 exports.getClients = function(callback) {
 	Client.find( {}, function(err, clients) {
 		callback(err, clients);
 	});
 };
-exports.getProjects = function( clientName, callback) {
+exports.getProjectByName = function( projName, callback) {
+	Project.find( { name: projName }, function(err, project) {
+		callback(err, project);
+	});
+};
+exports.getProjectsByClient = function( clientName, callback) {
 	var queryObj = clientName !== '' ? { client: clientName } : {};
 	Project.find( queryObj, function(err, projects) {
 		callback(err, projects);
@@ -75,7 +85,7 @@ exports.getReportData = function(callback) {
 	that.getClients(function(err, clients){
 		if(!err){
 			report.clientList = clients;
-			that.getProjects('',function(err, projects){
+			that.getProjectsByClient('',function(err, projects){
 				if(!err){
 					report.projList = projects;
 					that.getActivities('',function(err, events){
