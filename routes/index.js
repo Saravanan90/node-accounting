@@ -19,7 +19,7 @@ exports.index = function(req, res) {
 	});
 }
 exports.indexGetClientDetails = function(req, res) {
-	var clientName = req.params.clientName;
+	var clientName = req.params.clientName || req.query.client;
 	model.getClient( clientName, function(err, client){
 		if(!err){
 			var data = {
@@ -37,7 +37,7 @@ exports.indexGetClientDetails = function(req, res) {
 	});
 }
 exports.indexGetProjDetails = function(req, res) {
-	var projName = req.params.projName;
+	var projName = req.params.projectName;
 	model.getProjectByName( projName, function(err, project){
 		if(!err){
 			var data = {
@@ -75,6 +75,12 @@ exports.addClient = function(req, res) {
 		}else{
 			res.status(200).send(data);
 		}
+	});
+}
+var getClients = exports.getClients = function(req, res) {
+	model.getClients( function(err, clientList){
+		if(!err)
+			res.send(clientList);
 	});
 }
 var getProjectsByClient = exports.getProjectsByClient = function(req, res) {

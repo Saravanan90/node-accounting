@@ -25,10 +25,11 @@ app.use(express.static(path.join(__dirname, 'www')));
 //app.use(express.static(path.join(__dirname, 'views/html')));
 
 //	Request Handlers
-app.get('/Accounting(/clients)?', routes.index);
-app.get('/Accounting/:clientName/projects', routes.indexGetClientDetails);
-app.get('/Accounting/:projName/events', routes.indexGetProjDetails);
+app.get('/Accounting(/clients(/summary)?(/add)?)?', routes.index);
+app.get('/Accounting/clients/:clientName/projects(/summary)?(/add)?', routes.indexGetClientDetails);
+app.get('/Accounting/projects/:projectName/events(/summary)?(/add)?', routes.indexGetProjDetails);
 app.get('/Accounting/report', routes.indexGetReportDetails);
+app.get('/client', routes.getClients);
 app.post('/client', routes.addClient);
 app.get('/project', routes.getProjectsByClient);
 app.post('/project', routes.addProject);

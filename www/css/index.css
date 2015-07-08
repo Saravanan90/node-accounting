@@ -56,6 +56,10 @@ html, body, .page, #menu, .content, .popup{
 .page{
 	position: absolute;
 	width: 100%;
+	display: none;
+}
+.activePage{
+	display: block;
 }
 .width100{
 	width: 100%;
@@ -91,6 +95,7 @@ header{
 	-moz-transition: -moz-transform 500ms ease-in;
 	-ms-transition: -ms-transform 500ms ease-in;
 	z-index: 1;
+	display: block;
 }
 .scale0{
 	-webkit-transform: scale(0);
