@@ -15,11 +15,16 @@
 		},
 		clientDetailModelOpts = {
 			type: 'model',
+			url: '/project',
 			defaults: {
 				name: '',
 				eMail: '',
 				info: '',
 				projList: module.getComponent( projectCollectionOpts )
+			},
+			parse: function( data, options ){
+				this.set( data.client );
+				this.get('projList').reset( data.projList );
 			}
 		},
 		projectViewOpts = {
@@ -57,56 +62,12 @@
 			},
 			fetchProjList: function() {
 				var model = this.model;
-				model.get('projList').fetch({
+				model.fetch({
 					data:{ 
 						clientName: model.get('name')
 					},
-					reset: true,
-					success: function(model, response, options) {
-					},
-					error: function(model, response, options) {			
-					}
+					reset: true
 				});
-			}
-		},
-		addProjectViewOpts = {
-			type: 'view',
-			el: '#addProjectPopup',
-			initialize: function(data) {
-				this.projCollection = this.model.get('projList');
-				this.projCollection.bind('add', this.projAdditionCallBack, this);
-			},
-			events: {
-				'submit form': 'submitModelData',
-				'click #closeIcon': 'triggerClose'
-			},
-			submitModelData: function(event) {
-				event.preventDefault();
-				var	newProjData = util.getJSON( $(event.currentTarget).serializeArray() );
-				newProjData.client = this.model.get('name');
-				this.projCollection.create(newProjData,{wait: true});
-			},
-			projAdditionCallBack: function( data, response ) {
-				if(data.attributes.code === 11000){
-					alert('Duplicate Project...');
-					this.clearFields();
-				}else{
-					alert('Project Added Successfully...');
-					this.triggerClose();
-				}
-			},
-			triggerClose: function() {
-				this.controller.publish('closeIconTapped');
-			},
-			clearFields: function() {
-				this.$el.find('input[type="text"]').val('');
-			},
-			open: function() {
-				this.$el.removeClass('scale0');
-			},
-			close: function() {
-				this.$el.addClass('scale0');
-				this.clearFields();
 			}
 		};
 	
@@ -115,10 +76,6 @@
 			type: 'controller',
 			events: {
 				'showClientDetails': 'showClientDetails',
-				'addIconTapped': 'showAddProject',
-				'closeIconTapped': 'closeHandler',
-				'closeAddPopup': 'closePopup',
-				'showAddProject': 'loadAddProjectView',
 				'editClient': 'callEdit',
 				'navBackToProjects': 'backToProjects'
 			},
@@ -144,34 +101,9 @@
 				util.transitPage( this.parent.views.projectView.$el );
 				this.parent.router.replaceRoute( 'summary' );
 			},
-			loadAddProjectView: function( clientName ) {
-				var views = this.parent.views;
-				if( ! views.projectView ){
-					this.loadClientDetails( clientName );
-					util.transitPage( views.projectView.$el );
-				}
-				var addProjectView = views.addProjectView;
-				if( !addProjectView ){
-					views.addProjectView = addProjectView = module.getComponent.call( this.parent, addProjectViewOpts, { model: this.parent.models.clientDetail } );
-				}
-				addProjectView.open();
-			},
-			showAddProject: function( clientName ) {
-				this.parent.router.replaceRoute( 'addSubRoute' );
-				this.loadAddProjectView( clientName );
-				this.parent.router.updateRoute( 'add' );
-			},
 			callEdit: function( project ) {
 				this.parent.router.replaceRoute( 'editSubRoute' );
 				this.parent.router.triggerRoute( project + '/events' );
-			},
-			closeHandler: function() {
-				window.history.back();
-			},
-			closePopup: function() {
-				var addProjectView = this.parent.views.addProjectView;
-				addProjectView.close();
-				this.parent.router.replaceRoute( 'summary' );
 			},
 			backToProjects: function( clientName ) {
 				var views = this.parent.views;
@@ -184,24 +116,16 @@
 		},
 		routerOpts: {
 			type: 'router',
-			root: 'clients/:clientName/projects',
+			rootPath: 'clients/:clientName/projects',
 			routes: {
 				'clients/:clientName/projects(/summary)': 'showClientDetails',
-				'clients/:clientName/projects/add': 'showAddProjectPopup',
-				'clients/:clientName/projects/addSubRoute': 'closeAddProjectPopup',
 				'clients/:clientName/projects/editSubRoute': 'navBackToProjects'
 			},
 			showClientDetails: function( clientName ){
 				this.controller.publish('showClientDetails', clientName);
 			},
 			updateRoot: function( clientName ){
-				this.root = this.root.replace(/:clientName/, clientName);
-			},
-			showAddProjectPopup: function( clientName ) {
-				this.controller.publish('showAddProject', clientName);
-			},
-			closeAddProjectPopup: function() {
-				this.controller.publish('closeAddPopup');
+				this.root = this.rootPath.replace(/:clientName/, clientName);
 			},
 			navBackToProjects: function( clientName ) {
 				this.controller.publish('navBackToProjects', clientName);

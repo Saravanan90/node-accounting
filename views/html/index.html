@@ -1,0 +1,548 @@
+<html>
+	<head>
+		<title>Accounting</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="css/index.css" />
+		<script src="js/jquery.js"></script>
+		<script src="js/underscore.js"></script>
+		<script src="js/backbone.js"></script>
+	</head>
+	<body>
+		<div class="absolutePositioned popupWrapper overlay-bg page inlineBlockWrapper transitionTransform scale0 width100" id="addClientPopup">
+	<div class="inlineBlock verticalMiddle">
+		<header class="bg-orange color-white textCenter">
+			Add Client
+			<span id="closeIcon" class="floatRight">X</span>
+		</header>
+		<div class="verticalMargin-10 padding-10 bg-lightgray">
+			<form>
+				Name<input type="text" name="name" class="width100 bottomMargin-10"/>
+				e-mail<input type="text" name="eMail" class="width100 bottomMargin-10" />
+				Info<input type="text" name="info" class="width100 bottomMargin-10" />
+				<input type="submit" value="Submit" />
+			</form>
+		</div>
+	</div>
+</div>
+		<div class="absolutePositioned popupWrapper overlay-bg page inlineBlockWrapper transitionTransform scale0 width100" id="addClientPopup">
+	<div class="inlineBlock verticalMiddle">
+		<header class="bg-orange color-white textCenter">
+			Add Client
+			<span id="closeIcon" class="floatRight">X</span>
+		</header>
+		<div class="verticalMargin-10 padding-10 bg-lightgray">
+			<form>
+				Name<input type="text" name="name" class="width100 bottomMargin-10"/>
+				e-mail<input type="text" name="eMail" class="width100 bottomMargin-10" />
+				Info<input type="text" name="info" class="width100 bottomMargin-10" />
+				<input type="submit" value="Submit" />
+			</form>
+		</div>
+	</div>
+</div>
+		<div class="absolutePositioned popupWrapper overlay-bg page inlineBlockWrapper transitionTransform scale0 width100" id="addClientPopup">
+	<div class="inlineBlock verticalMiddle">
+		<header class="bg-orange color-white textCenter">
+			Add Client
+			<span id="closeIcon" class="floatRight">X</span>
+		</header>
+		<div class="verticalMargin-10 padding-10 bg-lightgray">
+			<form>
+				Name<input type="text" name="name" class="width100 bottomMargin-10"/>
+				e-mail<input type="text" name="eMail" class="width100 bottomMargin-10" />
+				Info<input type="text" name="info" class="width100 bottomMargin-10" />
+				<input type="submit" value="Submit" />
+			</form>
+		</div>
+	</div>
+</div>
+		<div class="page transitionTransform" id="clientSummary">
+			<header class="bg-orange inlineBlockWrapper boxsizingInherit color-white">
+				<div class="menuIcon headerIcon inlineBlock verticalMiddle stackTop"></div>
+				<h3 class="screenTitle inlineBlock verticalMiddle boxsizingInherit font28">Clients Overview</h3>
+				<div id="addIcon" class="headerIcon inlineBlock verticalMiddle font32 textCenter">+</div>
+			</header>
+			<div class="content">
+				<ul id="clientlist"></ul>
+			</div>
+		</div>
+		<div class="page transitionTransform translateX100" id="projSummary">
+	<header class="bg-orange inlineBlockWrapper boxsizingInherit color-white">
+		<div class="menuIcon headerIcon inlineBlock verticalMiddle stackTop"></div>
+		<h3 class="screenTitle inlineBlock verticalMiddle boxsizingInherit font28">Projects Overview</h3>
+		<div id="addIcon" class="headerIcon inlineBlock verticalMiddle font32 textCenter">+</div>
+	</header>
+	<div class="content">
+		<ul id="clientDetail">
+		
+		</ul>
+		<ul id="projlist">
+			
+		</ul>
+	</div>
+</div>
+
+		<div class="page transitionTransform translateX100" id="eventSummary">
+	<header class="bg-orange inlineBlockWrapper boxsizingInherit color-white">
+		<div class="menuIcon headerIcon inlineBlock verticalMiddle stackTop"></div>
+		<h3 class="screenTitle inlineBlock verticalMiddle boxsizingInherit font28">Events Overview</h3>
+		<div id="addIcon" class="headerIcon inlineBlock verticalMiddle font32 textCenter">+</div>
+	</header>
+	<div class="content">
+		<ul id="eventlist"></ul>
+	</div>
+</div>
+	
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>	
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>	
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>	
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>	
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>	
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>	
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>	
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>	
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>	
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>	
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( clients, function(client) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient" data-index=<%=client._id%>>Edit</button>
+		<p class="font24 bottomMargin-5"><%=client.name%></p>
+		<p class="bottomMargin-5"><%=client.eMail%></p>
+		<p><%=client.info%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( projects, function(proj) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=proj.name%></p>
+		<p><%=proj.cost%></p>
+	</li>
+<%})%>
+</script>
+
+<script type="text/x-underscore-template" id="client-template">
+<%_.forEach( events, function(event) {%>
+	<li class="listitem">
+		<button class="floatRight js-editClient">Edit</button>
+		<p class="font24 bottomMargin-5"><%=event.desc%></p>
+		<p><%=event.time%></p>
+	</li>
+<%})%>
+</script>	
+		<script src="js/index.js"></script>
+	</body>
+</html> 

@@ -20,38 +20,14 @@ exports.index = function(req, res) {
 }
 exports.indexGetClientDetails = function(req, res) {
 	var clientName = req.params.clientName || req.query.client;
-	model.getClient( clientName, function(err, client){
-		if(!err){
-			var data = {
-				client: client[0]
-			};
-			getProjectsByClient(clientName, function(err, projList) {
-				if( !err){
-					data.projList = projList;
-				}
-				indexRouteCallBack( res, err, data );
-			});
-		}else{
-			indexRouteCallBack( res, err );
-		}
+	getProjectsByClient(clientName, function(err, data) {
+		indexRouteCallBack( res, err, data );
 	});
 }
 exports.indexGetProjDetails = function(req, res) {
 	var projName = req.params.projectName;
-	model.getProjectByName( projName, function(err, project){
-		if(!err){
-			var data = {
-				project: project[0]
-			};
-			getEvents(projName, function(err, eventList) {
-				if( !err){
-					data.eventList = eventList;
-				}
-				indexRouteCallBack( res, err, data );
-			});
-		}else{
-			indexRouteCallBack( res, err );
-		}
+	getEvents(projName, function(err, data) {
+		indexRouteCallBack( res, err, data );
 	});
 }
 exports.indexGetReportDetails = function(req, res) {
@@ -86,13 +62,26 @@ var getClients = exports.getClients = function(req, res) {
 var getProjectsByClient = exports.getProjectsByClient = function(req, res) {
 	var isRouterCall = typeof req === 'object' ? true : false;
 	var clientName = isRouterCall ? req.query.clientName : req ;
-	model.getProjectsByClient( clientName, function(err, projList){
-		if( isRouterCall ){
-			if(!err){
-				res.send(projList);
-			}
+	
+	model.getClient( clientName, function(err, client){
+		if(!err){
+			var data = {
+				client: client[0]
+			};
+			model.getProjectsByClient( clientName, function(err, projList){
+				data.projList = projList;
+				if( isRouterCall ){
+					if(!err){
+						res.send(data);
+					}
+				}else{
+					res(err, data);
+				}
+			});
+		}else if( isRouterCall ){
+			res.send(err, client);
 		}else{
-			res(err, projList);
+			res(err, client);
 		}
 	});
 } 
@@ -113,13 +102,26 @@ exports.addProject = function(req, res) {
 var getEvents = exports.getEvents = function(req, res) {
 	var isRouterCall = typeof req === 'object' ? true : false;
 	var projName = isRouterCall ? req.query.projName : req;
-	model.getActivities( projName, function(err, eventList){
-		if( isRouterCall ){
-			if(!err){
-				res.send(eventList);
-			}
+	
+	model.getProjectByName( projName, function(err, project){
+		if(!err){
+			var data = {
+				project: project[0]
+			};
+			model.getActivities( projName, function(err, eventList){
+				data.eventList = eventList;
+				if( isRouterCall ){
+					if(!err){
+						res.send(data);
+					}
+				}else{
+					res(err, data);
+				}
+			});
+		}else if( isRouterCall ){
+			res.send(err, project);
 		}else{
-			res(err, eventList);
+			res(err, project);
 		}
 	});
 } 

@@ -136,10 +136,37 @@
 			}else{
 				throwError( name + ' Module already stopped...' );
 			}
+		},
+		
+		extend: function( name, params ) {
+			util.checkType( 'string', name, 'Module Name' );
+			util.checkType( 'object', params, 'Module Params' );
+			var module1 = modules[name]; 
+			if( ! module1 )
+				throw ReferenceError( name + ' Module yet to be registered...');
+			else{
+				var controllerOpts = params.controllerOpts,
+					routerOpts = params.routerOpts;
+				if( controllerOpts )
+					mergeControllerProps( module1.instance.configs.controllerOpts, controllerOpts );
+				if( routerOpts )
+					mergeRouterProps( module1.instance.configs.routerOpts, routerOpts );
+					
+			}
 		}
 	};
 	
+	function mergeControllerProps( parent, newprops ) {
+		util.mergeObjects( parent.events, newprops.events );
+		util.mergeObjects( parent, newprops.eventHandlers );
+	}
+	function mergeRouterProps( parent, newprops ) {
+		util.mergeObjects( parent.routes, newprops.routes );
+		util.mergeObjects( parent, newprops.routeHandlers );
+	}
+		
 	app.register = Module.register;
+	app.extendModule = Module.extend;
 	
 	app.start = function( data ) {
 		app.launchData = data;

@@ -114,6 +114,11 @@ var util = (function( app ) {
 			}, 100 );
 		} 
 	}
+	
+	function mergeObjects( dest, newProps ){
+		_.extend( dest, newProps );
+	}
+	
 	var transitionEndEvent = function(){
 		var el = document.createElement('div'),
 			transitionMap = {
@@ -142,6 +147,9 @@ var util = (function( app ) {
 		},
 		checkValue: function( value, param ) {
 			checkValue( value, param );
+		},
+		mergeObjects: function( dest, newProps ) {
+			mergeObjects( dest, newProps );
 		}
 	}
 })(App);
